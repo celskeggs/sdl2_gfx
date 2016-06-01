@@ -1,6 +1,17 @@
 #!/bin/bash -e
+PREFIX=$(pwd)/prefix/
+HOST=x86_64-unknown-linux-gnueabi
+
 cd SDL2
-./configure --host=x86_64-unknown-linux-gnueabi --enable-shared --disable-arts --disable-esd --disable-nas --enable-alsa --enable-pulseaudio-shared --disable-rpath --disable-video-wayland
+./configure --host=$HOST --prefix=$PREFIX --enable-shared --disable-arts --disable-esd --disable-nas --enable-alsa --enable-pulseaudio-shared --disable-rpath --disable-video-wayland
 make
+make install
 cd ..
-cp SDL2/build/.libs/libSDL2-2.0.so.0.4.0 dist/libSDL2-2.0.4.so
+find prefix
+
+cd SDL2_gfx
+./configure --host=$HOST --prefix=$PREFIX --enable-shared
+make
+make install
+cd ..
+find prefix
